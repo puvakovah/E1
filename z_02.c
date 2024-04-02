@@ -1,4 +1,6 @@
 #include <stdio.h>
+#define N 4
+#define M 5
 
 void vypis_mnozin(int m[], int velkost_m)
 {
@@ -8,14 +10,22 @@ void vypis_mnozin(int m[], int velkost_m)
 
      }
 }
-int prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
+void prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {
-     int m
+     for(int i=0; i<velkost_m1 ; i++)
+     {
+          for(int j=0; j<velkost_m2;j++)
+          {
+               if(m1[i] == m2[j])
+               {
+                    vypis_mnozin(m1,velkost_m1);
+               }
+          }
+     }
 }
 int main()
 {
-     int a[4]={1,2,3,4},b[5]={2,2,4,6,8};
-     int velkost_a = sizeof(a);
-     int velkost_b = sizeof(b);
+     int a[N]={1,2,3,4},b[M]={2,2,4,6,8};
 
+     prienik(a,b,N,M);
 }
