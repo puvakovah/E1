@@ -36,17 +36,21 @@ void zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
      int P=0;
      int m[M];
 
+     vypis_mnozin(m,P);
      printf("Zjenodtenie mnozin = {");
-     
+
      for(int i=0; i<velkost_m1 ; i++)
      {
-          for(int j=0; j<velkost_m2;j++)
-          {
-          vypis_mnozin(m1,velkost_m1);
-          vypis_mnozin(m2,velkost_m2);
-          }    
+          m[P++] = m1[i];   
      }
 
+     for(int i=0; i<velkost_m2 ; i++)
+     {
+          m[P++] = m2[i];   
+     }
+
+
+     vypis_mnozin(m,P);
      printf("}\n");
 }
 
