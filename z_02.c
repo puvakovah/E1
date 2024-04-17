@@ -2,20 +2,18 @@
 #define N 4
 #define M 5
 
-void vypis_mnozin(int m[], int velkost_m)
+void vypis_mnozin(int m[])
 {
-     for(int i=0; i<velkost_m ; i++)
+     for(int i=0; i<100 ; i++)
      {
           printf( " %d ",m[i]);
      }
 }
 
-void prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
+int prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {
      int P=0;
      int m[M];
-
-     printf("Prienik mnozin = {");
 
      for(int i=0; i<velkost_m1 ; i++)
      {
@@ -27,8 +25,7 @@ void prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
                }
           }    
      }
-     vypis_mnozin(m,P);
-     printf("}\n");
+     
 }
 
 void zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
@@ -36,8 +33,6 @@ void zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
      int P=0;
      int m[M];
 
-     vypis_mnozin(m,P);
-     printf("Zjenodtenie mnozin = {");
 
      for(int i=0; i<velkost_m1 ; i++)
      {
@@ -49,17 +44,16 @@ void zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
           m[P++] = m2[i];   
      }
 
-
-     vypis_mnozin(m,P);
-     printf("}\n");
 }
 
 int main()
 {
-     int a[N]={1,2,3,4},b[M]={2,2,4,6,8};
+     int a[N]={1,2,3,4},b[M]={2,2,4,6,8},m[100];
      
-     prienik(a,b,N,M);
-     zjednotenie(a,b,N,M);
+     m[100]=prienik(a,b,N,M);
+     for(int i=0;i<100;i++)
+     vypis_mnozin(m);
+     //zjednotenie(a,b,N,M);
      
      return 0;
 }
