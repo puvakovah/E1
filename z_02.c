@@ -54,6 +54,6 @@ int main()
      for(int i=0;i<100;i++)
      vypis_mnozin(m);
      //zjednotenie(a,b,N,M);
-     
+     int x;
      return 0;
 }
