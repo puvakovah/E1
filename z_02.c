@@ -1,19 +1,28 @@
 #include <stdio.h>
-#define N 4
-#define M 5
+#include<time.h>
+#include<stdlib.h>
 
-void vypis_mnozin(int m[])
+void vypis_mnozin(int M[], int n)
 {
-     for(int i=0; i<100 ; i++)
+     for(int i=0; i<n ; i++)
      {
-          printf( " %d ",m[i]);
+          printf( " %d ",M[i]);
      }
 }
+
+int* generator_mnozin(int n) {
+    srand(time(NULL));
+    int* M = malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++) {
+        M[i] = rand() % 101; // Generovanie od 0 po 100
+    }
+}
+
 
 int prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {
      int P=0;
-     int m[M];
+     int M[P];
 
      for(int i=0; i<velkost_m1 ; i++)
      {
@@ -21,7 +30,7 @@ int prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
           {
                if(m1[i] == m2[j])
                {
-                    m[P++] = m2[j];
+                    M[P++] = m2[j];
                }
           }    
      }
@@ -31,29 +40,29 @@ int prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
 void zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {
      int P=0;
-     int m[M];
+     int M[P];
 
 
      for(int i=0; i<velkost_m1 ; i++)
      {
-          m[P++] = m1[i];   
+          M[P++] = m1[i];   
      }
 
      for(int i=0; i<velkost_m2 ; i++)
      {
-          m[P++] = m2[i];   
+          M[P++] = m2[i];   
      }
 
 }
 
 int main()
 {
-     int a[N]={1,2,3,4},b[M]={2,2,4,6,8},m[100];
-     
-     m[100]=prienik(a,b,N,M);
-     for(int i=0;i<100;i++)
-     vypis_mnozin(m);
-     //zjednotenie(a,b,N,M);
-     int x;
+     int n=6,m=8;
+    int* m1=generator_mnozin(n);
+    int* m2=generator_mnozin(m);
+  
+    vypis_mnozin(m1,n);
+    vypis_mnozin(m2,m);
+
      return 0;
 }
