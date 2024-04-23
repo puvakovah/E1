@@ -18,8 +18,9 @@ void vypis_mnozin(int m[], int n)
 
 MNOZINA generator_mnozin(int n) {
     MNOZINA m;
+    m.velkost=n;
     for (int i = 0; i < m.velkost; i++) {
-        m.mnozina[m.velkost] = rand() % 101; // Generovanie od 0 po 100
+        m.mnozina[i] = rand() % 101; // Generovanie od 0 po 100
     }
     return m;
 }
@@ -70,12 +71,16 @@ int main()
      int* m_zjednotenia=zjednotenie(m1,m2,5,9);*/
      MNOZINA m1, m2;
      MNOZINA zjednotenie_m, prienik_m;
-  
+   
      m1.velkost=10;
      m2.velkost=5;
 
-     m1.mnozina=generator_mnozin(m1.velkost);
-     m2.mnozina=generator_mnozin(m2.velkost);
+     for (int i = 0; i < m1.velkost; i++) {
+        m1.mnozina[i] = generator_mnozin(10).mnozina[i];
+     }
+     for (int i = 0; i < m2.velkost; i++) {
+        m2.mnozina[i] = generator_mnozin(5).mnozina[i];
+     }
 
      printf("m1 = {");
      vypis_mnozin(m1.mnozina,m1.velkost);
