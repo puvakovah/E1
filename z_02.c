@@ -3,27 +3,31 @@
 #include<stdlib.h>
 #include <unistd.h>
 
-void vypis_mnozin(int M[], int n)
+typedef struct{
+int velkost;
+int mnozina[15];
+}MNOZINA;
+
+void vypis_mnozin(int m[], int n)
 {
      for(int i=0; i<n ; i++)
      {
-          printf( " %d ", M[i]);
+          printf( " %d ", m[i]);
      }
 }
 
-int* generator_mnozin(int n, int dh, int hh) {
-    int* M = malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++) {
-        M[i] = rand() % 101; // Generovanie od 0 po 100
+MNOZINA generator_mnozin(int n) {
+    MNOZINA m;
+    for (int i = 0; i < m.velkost; i++) {
+        m.mnozina[m.velkost] = rand() % 101; // Generovanie od 0 po 100
     }
-    return M;
+    return m;
 }
 
 
-int* prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
+MNOZINA prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {
-     int P=0;
-     int* M = malloc((velkost_m1 + velkost_m2) * sizeof(int));
+     MNOZINA m;
 
      for(int i=0; i<velkost_m1 ; i++)
      {
@@ -31,60 +35,65 @@ int* prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
           {
                if(m1[i] == m2[j])
                {
-                    M[P++] = m1[i];
-                     break;
+                    m.mnozina[m.velkost] = m1[i];
+                    m.velkost++;
                }
           }      
 } 
-return M;
+return m;
 }
 
-int* zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
-{
-     int P=0;
-     int* M = malloc((velkost_m1 + velkost_m2) * sizeof(int));
-
-
+MNOZINA zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
+{    
+     MNOZINA m;
      for(int i=0; i<velkost_m1 ; i++)
      {
-          M[P++] = m1[i];   
+          m.mnozina[m.velkost] = m1[i];  
+          m.velkost++; 
      }
 
      for(int i=0; i<velkost_m2 ; i++)
      {
-          M[P++] = m2[i];   
+          m.mnozina[m.velkost] = m2[i];   
+          m.velkost++;
      }
-     return M;
+     return m;
 }
 
 int main()
 {
      srand(time(NULL));
-     
-     int* m1=generator_mnozin(100,1,100);
-     int* m2=generator_mnozin(90,1,50);
-     int* m_prieniku=prienik(m1,m2,100,90);
-     int* m_zjednotenia=zjednotenie(m1,m2,100,90);
+
+    /* int* m1=generator_mnozin(5,1,10);
+     int* m2=generator_mnozin(9,1,10);
+     int* m_prieniku=prienik(m1,m2,5,9);
+     int* m_zjednotenia=zjednotenie(m1,m2,5,9);*/
+     MNOZINA m1, m2;
+     MNOZINA zjednotenie_m, prienik_m;
   
+     m1.velkost=10;
+     m2.velkost=5;
+
+     m1.mnozina=generator_mnozin(m1.velkost);
+     m2.mnozina=generator_mnozin(m2.velkost);
+
      printf("m1 = {");
-     vypis_mnozin(m1,100);
+     vypis_mnozin(m1.mnozina,m1.velkost);
      printf("}\n");
 
      printf("m2 = {");
-     vypis_mnozin(m2,90);
+     vypis_mnozin(m2.mnozina,m2.velkost);
      printf("}\n");
      
+     prienik_m=prienik(m1.mnozina,m2.mnozina,m1.velkost,m2.velkost);
      printf("prienik = {");
-     vypis_mnozin(m_prieniku,100);
+     vypis_mnozin(prienik_m.mnozina,prienik_m.velkost);
      printf("}\n");
 
-     printf("m2 = {");
-     vypis_mnozin(m_zjednotenia,190);
+     zjednotenie_m=zjednotenie(m1.mnozina,m2.mnozina,m1.velkost,m2.velkost);
+     printf("zjednotenie = {");
+     vypis_mnozin(zjednotenie_m.mnozina,zjednotenie_m.velkost);
      printf("}\n");
 
-     free(m1);
-    free(m2);
-    free(m_prieniku);
-    free(m_zjednotenia);
      return 0;
 }
