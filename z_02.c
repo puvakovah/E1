@@ -29,6 +29,7 @@ MNOZINA generator_mnozin(int n) {
 MNOZINA prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {
      MNOZINA m;
+     m.velkost=0;
 
      for(int i=0; i<velkost_m1 ; i++)
      {
@@ -36,8 +37,8 @@ MNOZINA prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
           {
                if(m1[i] == m2[j])
                {
-                    m.mnozina[m.velkost] = m1[i];
-                    m.velkost++;
+                    m.mnozina[m.velkost++] = m1[i];
+                    break;
                }
           }      
 } 
@@ -47,6 +48,7 @@ return m;
 MNOZINA zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {    
      MNOZINA m;
+     m.velkost=0;
      for(int i=0; i<velkost_m1 ; i++)
      {
           m.mnozina[m.velkost] = m1[i];  
