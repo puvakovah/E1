@@ -6,6 +6,7 @@
 typedef struct{
 int velkost;
 int mnozina[15];
+int pocitadlo;
 }MNOZINA;
 
 void vypis_mnozin(int m[], int n)
@@ -30,18 +31,21 @@ MNOZINA prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {
      MNOZINA m;
      m.velkost=0;
+     m.pocitadlo=0;
 
      for(int i=0; i<velkost_m1 ; i++)
      {
           for(int j=0; j<velkost_m2;j++)
+
           {
                if(m1[i] == m2[j])
                {
-                    m.mnozina[m.velkost++] = m1[i];
+                    m.mnozina[m.velkost++] = m1[i];  
                     break;
                }
-          }      
-} 
+           m.pocitadlo++; 
+          }   
+     } 
 return m;
 }
 
@@ -49,16 +53,19 @@ MNOZINA zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {    
      MNOZINA m;
      m.velkost=0;
+     m.pocitadlo=0;
      for(int i=0; i<velkost_m1 ; i++)
      {
           m.mnozina[m.velkost] = m1[i];  
           m.velkost++; 
+          m.pocitadlo++;
      }
 
      for(int i=0; i<velkost_m2 ; i++)
      {
           m.mnozina[m.velkost] = m2[i];   
           m.velkost++;
+          m.pocitadlo++;
      }
      return m;
 }
@@ -101,6 +108,10 @@ int main()
      printf("zjednotenie = {");
      vypis_mnozin(zjednotenie_m.mnozina,zjednotenie_m.velkost);
      printf("}\n");
+
+     printf("Pocet operacii prieniku: %d\n",prienik_m.pocitadlo);
+     printf("Pocet operacii zjednotenia: %d\n",zjednotenie_m.pocitadlo);
+     printf("Celkovy pocet operacii: %d\n",prienik_m.pocitadlo + zjednotenie_m.pocitadlo);
 
      return 0;
 }
