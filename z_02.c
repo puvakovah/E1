@@ -60,36 +60,25 @@ MNOZINA zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
           m.pocitadlo++;
      }
 
-     for(int i=0; i<velkost_m2 ; i++)
+     int existuje;
+     for(int i=0; i<velkost_m1 ; i++)
      {
-          m.mnozina[m.velkost] = m2[i];   
-          m.velkost++;
+          for(int j=0;j<=velkost_m2;j++)
+          {
+               if(m1[i]==m2[j])
+               {
+                    existuje=1;
+                    break;
+               }
+               if(existuje!=1)
+               {
+                    m.mnozina[m.velkost++]=m2[j];
+               }
+          }
           m.pocitadlo++;
      }
      return m;
 }
-
-/*void zapis_do_suboru(MNOZINA m1, MNOZINA m2, MNOZINA operacia,FILE *f)
-{
-     MNOZINA m;
-     m.velkost=0;
-     m.pocitadlo=0;
-
-     for(int i=0; i<m1.velkost ; i++)
-     {
-          for(int j=0; j<m2.velkost;j++)
-
-          {
-               if(m1.mnozina[i] == m2.mnozina[j])
-               {
-                    m.mnozina[m.velkost++] = m1.mnozina[i];  
-                    break;
-               }
-           m.pocitadlo++; 
-          } 
-          fprintf(f,"%d\t%d\n",i,m.pocitadlo);  
-     } 
-}*/
 
 
 int main()
@@ -148,12 +137,16 @@ int main()
      }
 
      prienik_m.pocitadlo=0;
+     zjednotenie_m.pocitadlo=0;
      for(int i=1;i<=20;i++)
      {
           prienik_m=prienik(m1.mnozina,m2.mnozina,i,i);
           prienik_m.pocitadlo++;
-          fprintf(f,"%d\t%d\n",i,prienik_m.pocitadlo);
+          zjednotenie_m=prienik(m1.mnozina,m2.mnozina,i,i);
+          zjednotenie_m.pocitadlo++;
+          fprintf(f,"%d\t%d\n",i,prienik_m.pocitadlo,zjednotenie_m.pocitadlo);
           prienik_m.pocitadlo=0;
+          zjednotenie_m.pocitadlo=0;
      }
 
      fclose(f);
