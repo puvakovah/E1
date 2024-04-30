@@ -5,42 +5,41 @@
 
 typedef struct{
 int velkost;
-int mnozina[15];
+int mnozina[200];
 int pocitadlo;
 }MNOZINA;
 
-void vypis_mnozin(MNOZINA m)
+void vypis_mnozin(int m[], int n)
 {
-     for(int i=0; i<m.velkost ; i++)
+     for(int i=0; i<n ; i++)
      {
-          printf( " %d ", m.mnozina[i]);
+          printf( " %d ", m[i]);
      }
 }
 
-MNOZINA generator_mnozin(int n) 
-{
-     MNOZINA m;
-    for (int i = 0; i < n; i++) {
+MNOZINA generator_mnozin(int n) {
+    MNOZINA m;
+    m.velkost=n;
+    for (int i = 0; i < m.velkost; i++) {
         m.mnozina[i] = rand() % 101; // Generovanie od 0 po 100
     }
     return m;
 }
 
-
-MNOZINA prienik(MNOZINA m1,MNOZINA m2)
+MNOZINA prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {
      MNOZINA m;
      m.velkost=0;
      m.pocitadlo=0;
 
-     for(int i=0; i<m1.velkost ; i++)
+     for(int i=0; i<velkost_m1 ; i++)
      {
-          for(int j=0; j<m2.velkost;j++)
+          for(int j=0; j<velkost_m2;j++)
 
           {
-               if(m1.mnozina[i] == m2.mnozina[j])
+               if(m1[i] == m2[j])
                {
-                    m.mnozina[m.velkost++] = m1.mnozina[i];  
+                    m.mnozina[m.velkost++] = m1[i];  
                     break;
                }
            m.pocitadlo++; 
@@ -49,28 +48,28 @@ MNOZINA prienik(MNOZINA m1,MNOZINA m2)
 return m;
 }
 
-MNOZINA zjednotenie(MNOZINA m1, MNOZINA m2)
+MNOZINA zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
 {    
      MNOZINA m;
      m.velkost=0;
      m.pocitadlo=0;
-     for(int i=0; i<m1.velkost ; i++)
+     for(int i=0; i<velkost_m1 ; i++)
      {
-          m.mnozina[m.velkost] = m1.mnozina[i];  
+          m.mnozina[m.velkost] = m1[i];  
           m.velkost++; 
           m.pocitadlo++;
      }
 
-     for(int i=0; i<m2.velkost ; i++)
+     for(int i=0; i<velkost_m2 ; i++)
      {
-          m.mnozina[m.velkost] = m2.mnozina[i];   
+          m.mnozina[m.velkost] = m2[i];   
           m.velkost++;
           m.pocitadlo++;
      }
      return m;
 }
 
-void zapis_do_suboru(MNOZINA m1, MNOZINA m2, MNOZINA operacia,FILE *f)
+/*void zapis_do_suboru(MNOZINA m1, MNOZINA m2, MNOZINA operacia,FILE *f)
 {
      MNOZINA m;
      m.velkost=0;
@@ -90,8 +89,7 @@ void zapis_do_suboru(MNOZINA m1, MNOZINA m2, MNOZINA operacia,FILE *f)
           } 
           fprintf(f,"%d\t%d\n",i,m.pocitadlo);  
      } 
-return m;
-}
+}*/
 
 
 int main()
@@ -105,8 +103,8 @@ int main()
      MNOZINA m1, m2;
      MNOZINA zjednotenie_m, prienik_m;
    
-     m1.velkost=10;
-     m2.velkost=5;
+     m1.velkost=50;
+     m2.velkost=50;
 
      for (int i = 0; i < m1.velkost; i++) {
         m1.mnozina[i] = generator_mnozin(m1.velkost).mnozina[i];
@@ -116,21 +114,21 @@ int main()
      }
 
      printf("m1 = {");
-     vypis_mnozin(m1);
+     vypis_mnozin(m1.mnozina,m1.velkost);
      printf("}\n");
 
      printf("m2 = {");
-     vypis_mnozin(m2);
+     vypis_mnozin(m2.mnozina,m2.velkost);
      printf("}\n");
      
-     prienik_m=prienik(m1,m2);
+     prienik_m=prienik(m1.mnozina,m2.mnozina,m1.velkost,m2.velkost);
      printf("prienik = {");
-     vypis_mnozin(prienik_m);
+     vypis_mnozin(prienik_m.mnozina,prienik_m.velkost);
      printf("}\n");
 
-     zjednotenie_m=zjednotenie(m1,m2);
+     zjednotenie_m=zjednotenie(m1.mnozina,m2.mnozina,m1.velkost,m2.velkost);
      printf("zjednotenie = {");
-     vypis_mnozin(zjednotenie_m);
+     vypis_mnozin(zjednotenie_m.mnozina,zjednotenie_m.velkost);
      printf("}\n");
 
      printf("Pocet operacii prieniku: %d\n",prienik_m.pocitadlo);
@@ -141,13 +139,22 @@ int main()
 
      f=fopen("vysledky.txt","w");
 
+
+
      if (f == NULL) 
      {
         printf("Error opening file!\n");
         return 1;
      }
 
-     zapis_do_suboru(m1,m2,prienik_m,f);
+     prienik_m.pocitadlo=0;
+     for(int i=1;i<=20;i++)
+     {
+          prienik_m=prienik(m1.mnozina,m2.mnozina,i,i);
+          prienik_m.pocitadlo++;
+          fprintf(f,"%d\t%d\n",i,prienik_m.pocitadlo);
+          prienik_m.pocitadlo=0;
+     }
 
      fclose(f);
      return 0;
