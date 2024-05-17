@@ -1,1 +1,1 @@
-MNOZINA
+(double)
