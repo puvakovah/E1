@@ -13,24 +13,23 @@ void vypis_mnozin(int *m, int n)
 {
      for(int i=0; i<n ; i++)
      {
-          printf( " %d ", m[i]);
+          printf( " %d ", *(m + i));
      }
 }
 
-MNOZINA generator_mnozin(int n) {
-    MNOZINA m;
-    m.velkost=n;
-    for (int i = 0; i < m.velkost; i++) {
-        m.mnozina[i] = rand() % 101; // Generovanie od 0 po 100
+MNOZINA *generator_mnozin(int n) {
+    MNOZINA *m = (MNOZINA*) malloc (n * sizeof(MNOZINA));
+    for (int i = 0; i < n; i++) {
+        m->mnozina[i] = rand() % 101; // Generovanie od 0 po 100
     }
     return m;
 }
 
-MNOZINA prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
+MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {
-     MNOZINA m;
-     m.velkost=0;
-     m.pocitadlo=0;
+     MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
+     m->velkost=0;
+     m->pocitadlo=0;
 
      for(int i=0; i<velkost_m1 ; i++)
      {
@@ -39,25 +38,25 @@ MNOZINA prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
           {
                if(m1[i] == m2[j])
                {
-                    m.mnozina[m.velkost++] = m1[i];  
+                    m->mnozina[m->velkost++] = m1[i];  
                     break;
                }
-           m.pocitadlo++; 
+           m->pocitadlo++; 
           }   
      } 
      return m;
 }
 
-MNOZINA zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
+MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {    
-     MNOZINA m;
-     m.velkost=0;
-     m.pocitadlo=0;
+     MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
+     m->velkost=0;
+     m->pocitadlo=0;
      for(int i=0; i<velkost_m1 ; i++)
      {
-          m.mnozina[m.velkost] = m1[i];  
-          m.velkost++; 
-          m.pocitadlo++;
+          m->mnozina[m->velkost] = m1[i];  
+          m->velkost++; 
+          m->pocitadlo++;
      }
 
      int existuje;
@@ -72,10 +71,10 @@ MNOZINA zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
                }
                if(existuje!=1)
                {
-                    m.mnozina[m.velkost++]=m2[j];
+                    m->mnozina[m->velkost++]=m2[j];
                }
           }
-          m.pocitadlo++;
+          m->pocitadlo++;
      }
      return m;
 }
@@ -89,17 +88,23 @@ int main()
      int* m2=generator_mnozin(9,1,10);
      int* m_prieniku=prienik(m1,m2,5,9);
      int* m_zjednotenia=zjednotenie(m1,m2,5,9);*/
-     MNOZINA m1, m2;
-     MNOZINA zjednotenie_m, prienik_m;
-   
+     MNOZINA m1,m2;
+
      m1.velkost=50;
      m2.velkost=50;
 
-     for (int i = 0; i < m1.velkost; i++) {
-        m1.mnozina[i] = generator_mnozin(m1.velkost).mnozina[i];
+     MNOZINA *m1_generovane = generator_mnozin(m1.velkost);
+     MNOZINA *m2_generovane = generator_mnozin(m2.velkost);   
+     MNOZINA *zjednotenie_m, *prienik_m;
+
+     for (int i = 0; i < m1.velkost; i++)
+     {
+          m1.mnozina[i] = m1_generovane->mnozina[i];
      }
-     for (int i = 0; i < m2.velkost; i++) {
-        m2.mnozina[i] = generator_mnozin(m2.velkost).mnozina[i];
+
+     for (int i = 0; i < m2.velkost; i++) 
+     {
+          m2.mnozina[i] = m2_generovane->mnozina[i];
      }
 
      printf("m1 = {");
@@ -110,21 +115,21 @@ int main()
      vypis_mnozin(m2.mnozina,m2.velkost);
      printf("}\n");
      
-     prienik_m=prienik(m1.mnozina,m2.mnozina,m1.velkost,m2.velkost);
+     prienik_m = prienik(m1.mnozina,m2.mnozina,m1.velkost,m2.velkost);
      printf("prienik = {");
-     vypis_mnozin(prienik_m.mnozina,prienik_m.velkost);
+     vypis_mnozin(prienik_m->mnozina,prienik_m->velkost);
      printf("}\n");
 
-     zjednotenie_m=zjednotenie(m1.mnozina,m2.mnozina,m1.velkost,m2.velkost);
+     zjednotenie_m = zjednotenie(m1.mnozina,m2.mnozina,m1.velkost,m2.velkost);
      printf("zjednotenie = {");
-     vypis_mnozin(zjednotenie_m.mnozina,zjednotenie_m.velkost);
+     vypis_mnozin(zjednotenie_m->mnozina,zjednotenie_m->velkost);
      printf("}\n");
 
-     printf("Pocet operacii prieniku: %d\n",prienik_m.pocitadlo);
+     printf("Pocet operacii prieniku: %d\n",prienik_m->pocitadlo);
      
-     printf("Pocet operacii zjednotenia: %d\n",zjednotenie_m.pocitadlo);
+     printf("Pocet operacii zjednotenia: %d\n",zjednotenie_m->pocitadlo);
      
-     printf("Celkovy pocet operacii: %d\n",prienik_m.pocitadlo + zjednotenie_m.pocitadlo);
+     printf("Celkovy pocet operacii: %d\n",prienik_m->pocitadlo + zjednotenie_m->pocitadlo);
 
      f=fopen("vysledky.txt","w");
 
@@ -136,17 +141,17 @@ int main()
         return 1;
      }
 
-     prienik_m.pocitadlo=0;
-     zjednotenie_m.pocitadlo=0;
+     prienik_m->pocitadlo=0;
+     zjednotenie_m->pocitadlo=0;
      for(int i=1;i<=20;i++)
      {
           prienik_m=prienik(m1.mnozina,m2.mnozina,i,i);
-          prienik_m.pocitadlo++;
+          prienik_m->pocitadlo++;
           zjednotenie_m=prienik(m1.mnozina,m2.mnozina,i,i);
-          zjednotenie_m.pocitadlo++;
-          fprintf(f,"%d\t%d\n",i,prienik_m.pocitadlo,zjednotenie_m.pocitadlo);
-          prienik_m.pocitadlo=0;
-          zjednotenie_m.pocitadlo=0;
+          zjednotenie_m->pocitadlo++;
+          fprintf(f,"%d\t%d\n",i,prienik_m->pocitadlo,zjednotenie_m->pocitadlo);
+          prienik_m->pocitadlo=0;
+          zjednotenie_m->pocitadlo=0;
      }
 
      fclose(f);
