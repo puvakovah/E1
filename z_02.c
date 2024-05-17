@@ -9,7 +9,7 @@ typedef struct{
      int pocitadlo;
 }MNOZINA;
 
-void vypis_mnozin(int m[], int n)
+void vypis_mnozin(int *m, int n)
 {
      for(int i=0; i<n ; i++)
      {
@@ -26,7 +26,7 @@ MNOZINA generator_mnozin(int n) {
     return m;
 }
 
-MNOZINA prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
+MNOZINA prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {
      MNOZINA m;
      m.velkost=0;
@@ -48,7 +48,7 @@ MNOZINA prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
      return m;
 }
 
-MNOZINA zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
+MNOZINA zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {    
      MNOZINA m;
      m.velkost=0;
