@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include<time.h>
-#include<stdlib.h>
+#include <time.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 typedef struct{
-int velkost;
-int mnozina[200];
-int pocitadlo;
+     int velkost;
+     int mnozina[200];
+     int pocitadlo;
 }MNOZINA;
 
 void vypis_mnozin(int m[], int n)
@@ -45,7 +45,7 @@ MNOZINA prienik(int m1[], int m2[], int velkost_m1, int velkost_m2)
            m.pocitadlo++; 
           }   
      } 
-return m;
+     return m;
 }
 
 MNOZINA zjednotenie(int m1[], int m2[], int velkost_m1, int velkost_m2)
