@@ -5,7 +5,7 @@
 
 typedef struct{
      int velkost;
-     int mnozina[200];
+     int *mnozina;
      int pocitadlo;
 }MNOZINA;
 
@@ -18,7 +18,8 @@ void vypis_mnozin(int *m, int n)
 }
 
 MNOZINA *generator_mnozin(int n) {
-    MNOZINA *m = (MNOZINA*) malloc (n * sizeof(MNOZINA));
+     MNOZINA *m = (MNOZINA*) malloc (n * sizeof(MNOZINA));
+     m->mnozina = (int*)malloc(n * sizeof(int));
     for (int i = 0; i < n; i++) {
         m->mnozina[i] = rand() % 101; // Generovanie od 0 po 100
     }
@@ -29,6 +30,7 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {
      MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
      m->velkost=0;
+     m->mnozina = (int*)malloc((velkost_m1 < velkost_m2 ? velkost_m1 : velkost_m2) * sizeof(int));
      m->pocitadlo=0;
      int i = 0, j = 0;
      while (i < velkost_m1 && j < velkost_m2) 
@@ -57,6 +59,7 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {    
      MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
      m->velkost=0;
+     m->mnozina = (int*)malloc((velkost_m1 < velkost_m2 ? velkost_m1 : velkost_m2) * sizeof(int));
      m->pocitadlo=0;
      int i = 0, j = 0;
      while (i < velkost_m1 && j < velkost_m2) {
