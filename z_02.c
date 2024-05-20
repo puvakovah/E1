@@ -20,9 +20,10 @@ void vypis_mnozin(int *m, int n)
 
 int *generator_mnozin(int n) {
      int *m = (int*) malloc (n * sizeof(int));
-    for (int i = 0; i < n; i++) {
-        m[i] = rand() % 101; // Generovanie od 0 po 100
-    }
+     for (int i = 0; i < n; i++) 
+     {
+          m[i] = rand() % 101; // Generovanie od 0 po 100
+     }
     return m;
 }
 
@@ -59,10 +60,12 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {    
      MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
+     int i = 0, j = 0;
+
      m->velkost=0;
      m->mnozina = (int*)malloc((velkost_m1+velkost_m2) * sizeof(int));
      m->pocitadlo=0;
-     int i = 0, j = 0;
+     
      while (i < velkost_m1 && j < velkost_m2) 
      {
           m->pocitadlo++;
@@ -82,12 +85,14 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
           
      }
 
-     while (i < velkost_m1) {
+     while (i < velkost_m1) 
+     {
           m->mnozina[m->velkost++] = m1[i++];
           m->pocitadlo++;
      }
 
-     while (j < velkost_m2) {
+     while (j < velkost_m2) 
+     {
           m->mnozina[m->velkost++] = m2[j++];
           m->pocitadlo++;
      }
