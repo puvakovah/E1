@@ -26,15 +26,17 @@ int *generator_mnozin(int n) {
     return m;
 }
 
+
 MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {
      MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
      m->velkost=0;
-     m->mnozina = (int*)malloc((velkost_m1 < velkost_m2 ? velkost_m1 : velkost_m2) * sizeof(int));
+     m->mnozina = (int*)malloc(velkost_m1 * sizeof(int));
      m->pocitadlo=0;
      int i = 0, j = 0;
      while (i < velkost_m1 && j < velkost_m2) 
      {
+          m->pocitadlo++;
           if (m1[i] < m2[j]) 
           {
                i++;
@@ -48,8 +50,7 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
           m->mnozina[m->velkost++] = m1[i];
                i++;
                j++;
-          }
-          m->pocitadlo++;
+          } 
      }
 
      return m;
@@ -59,10 +60,12 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {    
      MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
      m->velkost=0;
-     m->mnozina = (int*)malloc((velkost_m1 < velkost_m2 ? velkost_m1 : velkost_m2) * sizeof(int));
+     m->mnozina = (int*)malloc((velkost_m1+velkost_m2) * sizeof(int));
      m->pocitadlo=0;
      int i = 0, j = 0;
-     while (i < velkost_m1 && j < velkost_m2) {
+     while (i < velkost_m1 && j < velkost_m2) 
+     {
+          m->pocitadlo++;
           if (m1[i] < m2[j]) {
                m->mnozina[m->velkost++] = m1[i];
                i++;
@@ -76,7 +79,7 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
                i++;
                j++;
           }
-          m->pocitadlo++;
+          
      }
 
      while (i < velkost_m1) {
@@ -108,13 +111,10 @@ int main()
           int suma_operacii_prieniku = 0;
           int velkost = velkosti[i];
 
-          for(int j = 1; j <= 20; j++)
+          for(int j = 0; j < pocet_experimentov; j++)
           {
                int *m1 = generator_mnozin(velkost);
                int *m2 = generator_mnozin(velkost);
-
-               vypis_mnozin(m1,velkost);
-               vypis_mnozin(m2,velkost);
 
                MNOZINA *prienik_m ;
                MNOZINA *zjednotenie_m ;
@@ -122,12 +122,15 @@ int main()
                prienik_m = prienik(m1, m2, velkost,velkost);
                zjednotenie_m = zjednotenie(m1, m2, velkost,velkost);
 
-               vypis_mnozin(prienik_m->mnozina, prienik_m->velkost);
-               vypis_mnozin(zjednotenie_m->mnozina,zjednotenie_m->velkost);
-
                suma_operacii_prieniku += prienik_m->pocitadlo;
                suma_operacii_zjednotenia += zjednotenie_m->pocitadlo;
 
+               free(m1);
+               free(m2);
+               free(prienik_m->mnozina);
+               free(prienik_m);
+               free(zjednotenie_m->mnozina);
+               free(zjednotenie_m);
 
           }
 
