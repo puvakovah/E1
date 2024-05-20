@@ -100,6 +100,10 @@ int main()
 {
      srand(time(NULL));
 
+     FILE *f;
+
+     f=fopen("vysledky.txt","w");
+
      int velkosti[] = {10,20,30,40,50};
      int pocet_experimentov = 20;
      int n = sizeof(velkosti) / sizeof(velkosti[0]); 
@@ -137,9 +141,11 @@ int main()
           double priemer_operacii_prieniku = (double)suma_operacii_prieniku / pocet_experimentov;
           double priemer_operacii_zjednotenia = (double)suma_operacii_zjednotenia / pocet_experimentov;
 
-          printf("Velkost mnoziny: %d\n", velkost);
-          printf("Priemerny pocet operacii prieniku: %.2f\n", priemer_operacii_prieniku);
-          printf("Priemerny pocet operacii zjednotenia: %.2f\n", priemer_operacii_zjednotenia);
+          fprintf(f, "%d\t", velkost);
+          fprintf(f,"%.2f\t", priemer_operacii_prieniku);
+          fprintf(f,"%.2f\n", priemer_operacii_zjednotenia);
      }
+
+     fclose(f);
      return 0;
 }
