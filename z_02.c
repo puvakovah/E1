@@ -11,11 +11,12 @@ typedef struct{
 
 void vypis_mnozin(int *m, int n)
 {
+     printf("{");
      for(int i=0; i<n ; i++)
      {
           printf( " %d ", *(m + i));
      }
-     printf("\n");
+     printf("}\n");
 }
 
 int *generator_mnozin(int n) {
@@ -34,25 +35,40 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
      m->velkost=0;
      m->mnozina = (int*)malloc(velkost_m1 * sizeof(int));
      m->pocitadlo=0;
-     int i = 0, j = 0;
-     while (i < velkost_m1 && j < velkost_m2) 
+
+     for(int i = 0; i < velkost_m1; i++)
      {
-          m->pocitadlo++;
-          if (m1[i] < m2[j]) 
+          int existuje = 0;
+
+          for(int j = 0; j < velkost_m2; j++)
           {
-               i++;
-          } 
-          else if (m2[j] < m1[i]) 
+               if(m1[i] == m2[j])
+               {
+                    existuje = 1;
+                    break;
+               }
+          }
+
+          if(existuje)
           {
-               j++;
-          } 
-          else 
-          {
-          m->mnozina[m->velkost++] = m1[i];
-               i++;
-               j++;
-          } 
+               int patri = 0;
+               for(int k = 0; k < m->velkost; k++)
+               {
+                    if(m->mnozina[k] == m1[i])
+                    {
+                         patri = 1;
+                         break;
+                    }
+               }
+               
+               if(!patri)
+               {
+                    m->mnozina[m->velkost++] = m1[i];
+                    m->pocitadlo++;
+               }
+          }
      }
+           
 
      return m;
 }
@@ -134,6 +150,15 @@ int main()
                suma_operacii_prieniku += prienik_m->pocitadlo;
                suma_operacii_zjednotenia += zjednotenie_m->pocitadlo;
 
+               printf("m1 : ");
+               vypis_mnozin(m1,velkost);
+               printf("m2 : ");
+               vypis_mnozin(m2,velkost);
+               printf("prienik : ");
+               vypis_mnozin(prienik_m->mnozina,prienik_m->velkost);
+               printf("zjednotenie : ");
+               vypis_mnozin(zjednotenie_m->mnozina,zjednotenie_m->velkost);
+               
                free(m1);
                free(m2);
                free(prienik_m->mnozina);
