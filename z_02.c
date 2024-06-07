@@ -75,8 +75,8 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
      {
           if(hash_matica[m1[i]] == 0)
           {
-
                m->mnozina[m->velkost++] = m1[i];
+               hash_matica[m1[i]] = 1;
           }
           m->pocitadlo++;
      }
@@ -85,8 +85,8 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
      {
           if(hash_matica[m2[i]] == 0)
           {
-
                m->mnozina[m->velkost++] = m2[i];
+               hash_matica[m2[i]] = 1;
           }
           m->pocitadlo++;
      }
