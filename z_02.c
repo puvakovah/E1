@@ -36,39 +36,44 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
      m->mnozina = (int*)malloc(velkost_m1 * sizeof(int));
      m->pocitadlo=0;
 
+     int max_velkost = 0;
+
      for(int i = 0; i < velkost_m1; i++)
      {
+          if(m1[i] > max_velkost)
+          {
+               max_velkost = m1[i];
+          }    
+     }
+
+     int *hash_matica = (int*)calloc(max_velkost + 1, sizeof(int));
+     
+     for(int i = 0; i < velkost_m1; i++)
+     {
+          hash_matica[m1[i]] = 1;
+     }
+
+     for(int i = 0; i < velkost_m2; i++)
+     {
           int existuje = 0;
-
-          for(int j = 0; j < velkost_m2; j++)
+          if(m2[i] <= max_velkost && hash_matica[m2[i]])
           {
-               if(m1[i] == m2[j])
-               {
-                    existuje = 1;
-                    break;
-               }
-          }
-
-          if(existuje)
-          {
-               int patri = 0;
                for(int k = 0; k < m->velkost; k++)
                {
-                    if(m->mnozina[k] == m1[i])
+                    if(m->mnozina[k] == m2[i])
                     {
-                         patri = 1;
+                         existuje = 1;
                          break;
                     }
                }
-               
-               if(!patri)
+
+               if(!existuje)
                {
-                    m->mnozina[m->velkost++] = m1[i];
+                    m->mnozina[m->velkost++] = m2[i];
                     m->pocitadlo++;
                }
           }
      }
-           
 
      return m;
 }
@@ -84,8 +89,10 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
      
      while (i < velkost_m1 && j < velkost_m2) 
      {
+          int existuje = 0;
           m->pocitadlo++;
-          if (m1[i] < m2[j]) {
+          if (m1[i] < m2[j]) 
+          {
                m->mnozina[m->velkost++] = m1[i];
                i++;
           } 
