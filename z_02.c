@@ -47,7 +47,6 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 
      for(int i = 0; i < velkost_m1; i++)
      {
-          int existuje = 0;
           if(hash_matica[m1[i]] == 1)
           {
 
@@ -67,40 +66,30 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
      m->velkost=0;
      m->mnozina = (int*)malloc((velkost_m1+velkost_m2) * sizeof(int));
      m->pocitadlo=0;
+
+     int max_velkost = 101;
+
+     int *hash_matica = (int*)calloc(max_velkost , sizeof(int));
      
-     while (i < velkost_m1 && j < velkost_m2) 
+     for(int i = 0; i < velkost_m1; i++)
      {
-          int existuje = 0;
-          m->pocitadlo++;
-          if (m1[i] < m2[j]) 
+          if(hash_matica[m1[i]] == 0)
           {
+
                m->mnozina[m->velkost++] = m1[i];
-               i++;
-          } 
-          else if (m2[j] < m1[i]) {
-               m->mnozina[m->velkost++] = m2[j];
-               j++;
-          } 
-          else {
-               m->mnozina[m->velkost++] = m1[i];
-               i++;
-               j++;
           }
-          
-     }
-
-     while (i < velkost_m1) 
-     {
-          m->mnozina[m->velkost++] = m1[i++];
           m->pocitadlo++;
      }
 
-     while (j < velkost_m2) 
+     for(int i = 0; i < velkost_m2; i++)
      {
-          m->mnozina[m->velkost++] = m2[j++];
+          if(hash_matica[m2[i]] == 0)
+          {
+
+               m->mnozina[m->velkost++] = m2[i];
+          }
           m->pocitadlo++;
      }
-
     return m;
 }
 
