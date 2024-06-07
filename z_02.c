@@ -36,43 +36,24 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
      m->mnozina = (int*)malloc(velkost_m1 * sizeof(int));
      m->pocitadlo=0;
 
-     int max_velkost = 0;
+     int max_velkost = 101;
 
-     for(int i = 0; i < velkost_m1; i++)
-     {
-          if(m1[i] > max_velkost)
-          {
-               max_velkost = m1[i];
-          }    
-     }
-
-     int *hash_matica = (int*)calloc(max_velkost + 1, sizeof(int));
+     int *hash_matica = (int*)calloc(max_velkost , sizeof(int));
      
-     for(int i = 0; i < velkost_m1; i++)
-     {
-          hash_matica[m1[i]] = 1;
-     }
-
      for(int i = 0; i < velkost_m2; i++)
      {
-          int existuje = 0;
-          if(m2[i] <= max_velkost && hash_matica[m2[i]])
-          {
-               for(int k = 0; k < m->velkost; k++)
-               {
-                    if(m->mnozina[k] == m2[i])
-                    {
-                         existuje = 1;
-                         break;
-                    }
-               }
+          hash_matica[m2[i]] = 1;
+     }
 
-               if(!existuje)
-               {
-                    m->mnozina[m->velkost++] = m2[i];
-                    m->pocitadlo++;
-               }
+     for(int i = 0; i < velkost_m1; i++)
+     {
+          int existuje = 0;
+          if(hash_matica[m1[i]] == 1)
+          {
+
+               m->mnozina[m->velkost++] = m1[i];
           }
+          m->pocitadlo++;
      }
 
      return m;
@@ -132,7 +113,7 @@ int main()
 
      f=fopen("vysledky.txt","w");
 
-     int velkosti[] = {10,20,30,40,50};
+     int velkosti[] = {10,20,30,40,50,60,70,80,100};
      int pocet_experimentov = 20;
      int n = sizeof(velkosti) / sizeof(velkosti[0]); 
 
