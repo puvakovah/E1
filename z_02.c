@@ -47,6 +47,7 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
      if(m->mnozina == NULL)
      {
           printf("Error\n");
+          free(m);
      }
 
      m->pocitadlo=0;
@@ -58,6 +59,8 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
      if(hash_matica == NULL)
      {
           printf("Error\n");
+          free(m->mnozina);
+          free(m);
      }
      
      for(int i = 0; i < velkost_m2; i++)
@@ -94,6 +97,7 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
      if(m->mnozina == NULL)
      {
           printf("Error\n");
+          free(m);
      }
 
      m->pocitadlo=0;
@@ -105,6 +109,8 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
      if(hash_matica == NULL)
      {
           printf("Error\n");
+          free(m->mnozina);
+          free(m);
      }
      
      for(int i = 0; i < velkost_m1; i++)
