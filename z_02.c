@@ -54,9 +54,9 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 
      int max_velkost = 101;
 
-     int *hash_matica = (int*)calloc(max_velkost , sizeof(int));
+     int *hash_mnozina = (int*)calloc(max_velkost , sizeof(int));
 
-     if(hash_matica == NULL)
+     if(hash_mnozina == NULL)
      {
           printf("Error\n");
           free(m->mnozina);
@@ -65,12 +65,12 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
      
      for(int i = 0; i < velkost_m2; i++)
      {
-          hash_matica[m2[i]] = 1;
+          hash_mnozina[m2[i]] = 1;
      }
 
      for(int i = 0; i < velkost_m1; i++)
      {
-          if(hash_matica[m1[i]] == 1)
+          if(hash_mnozina[m1[i]] == 1)
           {
 
                m->mnozina[m->velkost++] = m1[i];
@@ -78,7 +78,7 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
           m->pocitadlo++;
      }
 
-     free(hash_matica);
+     free(hash_mnozina);
      return m;
 }
 
@@ -104,9 +104,9 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
 
      int max_velkost = 101;
 
-     int *hash_matica = (int*)calloc(max_velkost , sizeof(int));
+     int *hash_mnozina = (int*)calloc(max_velkost , sizeof(int));
 
-     if(hash_matica == NULL)
+     if(hash_mnozina == NULL)
      {
           printf("Error\n");
           free(m->mnozina);
@@ -115,25 +115,25 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
      
      for(int i = 0; i < velkost_m1; i++)
      {
-          if(hash_matica[m1[i]] == 0)
+          if(hash_mnozina[m1[i]] == 0)
           {
                m->mnozina[m->velkost++] = m1[i];
-               hash_matica[m1[i]] = 1;
+               hash_mnozina[m1[i]] = 1;
           }
           m->pocitadlo++;
      }
 
      for(int i = 0; i < velkost_m2; i++)
      {
-          if(hash_matica[m2[i]] == 0)
+          if(hash_mnozina[m2[i]] == 0)
           {
                m->mnozina[m->velkost++] = m2[i];
-               hash_matica[m2[i]] = 1;
+               hash_mnozina[m2[i]] = 1;
           }
           m->pocitadlo++;
      }
 
-     free(hash_matica);
+     free(hash_mnozina);
      return m;
 }
 
