@@ -75,6 +75,7 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
           m->pocitadlo++;
      }
 
+     free(hash_matica);
      return m;
 }
 
@@ -125,7 +126,9 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
           }
           m->pocitadlo++;
      }
-    return m;
+
+     free(hash_matica);
+     return m;
 }
 
 
