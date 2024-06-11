@@ -21,6 +21,10 @@ void vypis_mnozin(int *m, int n)
 
 int *generator_mnozin(int n) {
      int *m = (int*) malloc (n * sizeof(int));
+     if(m == NULL)
+     {
+          printf("Error\n");
+     }
      for (int i = 0; i < n; i++) 
      {
           m[i] = rand() % 101; // Generovanie od 0 po 100
@@ -32,13 +36,29 @@ int *generator_mnozin(int n) {
 MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {
      MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
+     if(m == NULL)
+     {
+          printf("Error\n");
+     }
+
      m->velkost=0;
      m->mnozina = (int*)malloc(velkost_m1 * sizeof(int));
+
+     if(m->mnozina == NULL)
+     {
+          printf("Error\n");
+     }
+
      m->pocitadlo=0;
 
      int max_velkost = 101;
 
      int *hash_matica = (int*)calloc(max_velkost , sizeof(int));
+
+     if(hash_matica == NULL)
+     {
+          printf("Error\n");
+     }
      
      for(int i = 0; i < velkost_m2; i++)
      {
@@ -61,15 +81,30 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
 {    
      MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
+     if(m == NULL)
+     {
+          printf("Error\n");
+     }
      int i = 0, j = 0;
 
      m->velkost=0;
      m->mnozina = (int*)malloc((velkost_m1+velkost_m2) * sizeof(int));
+
+     if(m->mnozina == NULL)
+     {
+          printf("Error\n");
+     }
+
      m->pocitadlo=0;
 
      int max_velkost = 101;
 
      int *hash_matica = (int*)calloc(max_velkost , sizeof(int));
+
+     if(hash_matica == NULL)
+     {
+          printf("Error\n");
+     }
      
      for(int i = 0; i < velkost_m1; i++)
      {
@@ -101,6 +136,11 @@ int main()
      FILE *f;
 
      f=fopen("vysledky.txt","w");
+     
+     if(f == NULL)
+     {
+          printf("Error\n");
+     }
 
      int velkosti[] = {10,20,30,40,50,60,70,80,100};
      int pocet_experimentov = 20;
