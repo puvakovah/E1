@@ -23,7 +23,7 @@ int *generator_mnozin(int n) {
      int *m = (int*) malloc (n * sizeof(int));
      if(m == NULL)
      {
-          printf("Error\n");
+          return NULL;
      }
      for (int i = 0; i < n; i++) 
      {
@@ -38,7 +38,7 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
      MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
      if(m == NULL)
      {
-          printf("Error\n");
+          return NULL;
      }
 
      m->velkost=0;
@@ -46,8 +46,8 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 
      if(m->mnozina == NULL)
      {
-          printf("Error\n");
           free(m);
+          return NULL;
      }
 
      m->pocitadlo=0;
@@ -58,9 +58,9 @@ MNOZINA *prienik(int *m1, int *m2, int velkost_m1, int velkost_m2)
 
      if(hash_mnozina == NULL)
      {
-          printf("Error\n");
           free(m->mnozina);
           free(m);
+          return NULL;
      }
      
      for(int i = 0; i < velkost_m2; i++)
@@ -87,7 +87,7 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
      MNOZINA *m = (MNOZINA*) malloc (sizeof(MNOZINA));
      if(m == NULL)
      {
-          printf("Error\n");
+          return NULL;
      }
      int i = 0, j = 0;
 
@@ -96,8 +96,8 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
 
      if(m->mnozina == NULL)
      {
-          printf("Error\n");
           free(m);
+          return NULL;
      }
 
      m->pocitadlo=0;
@@ -108,9 +108,9 @@ MNOZINA *zjednotenie(int *m1, int *m2, int velkost_m1, int velkost_m2)
 
      if(hash_mnozina == NULL)
      {
-          printf("Error\n");
           free(m->mnozina);
           free(m);
+          return NULL;
      }
      
      for(int i = 0; i < velkost_m1; i++)
@@ -167,11 +167,29 @@ int main()
                int *m1 = generator_mnozin(velkost);
                int *m2 = generator_mnozin(velkost);
 
+               if(m1 == NULL || m2 == NULL)
+               {
+                    free(m1);
+                    free(m2);
+                    fclose(f);
+                    return 1;
+               }
+
                MNOZINA *prienik_m ;
                MNOZINA *zjednotenie_m ;
 
                prienik_m = prienik(m1, m2, velkost,velkost);
                zjednotenie_m = zjednotenie(m1, m2, velkost,velkost);
+
+               if(prienik_m == NULL || zjednotenie_m == NULL)
+               {
+                    free(m1);
+                    free(m2);
+                    free(prienik_m);
+                    free(zjednotenie_m);
+                    fclose(f);
+                    return 1;
+               }
 
                suma_operacii_prieniku += prienik_m->pocitadlo;
                suma_operacii_zjednotenia += zjednotenie_m->pocitadlo;
