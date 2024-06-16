@@ -2,4 +2,4 @@
 *.log
 *.tmp
 *.out
-tempCodeRunnerFile.c
+*tempCodeRunnerFile.c
